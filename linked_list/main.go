@@ -3,37 +3,35 @@ package linkedlist
 import "fmt"
 
 func Main() {
-	datas := map[string]int{
-		"name1": 1,
-		"name2": 2,
-		"name3": 3,
-	}
-	link := NewDoublyLink()
-	for k, v := range datas {
-		link.Add(k, uint8(v))
+
+	type lT = string
+	datas := []lT{"aa", "bb", "cc"}
+	link := NewDoublyLink[lT]()
+	for _, i := range datas {
+		link.Add(i)
 	}
 	// 遍历
 	fmt.Println("遍历链表")
 	link.Traverse()
 	// 获取节点
-	for _, name := range [2]string{"name2", "name4"} {
-		name1, age, ok := link.Get(name)
+	for _, i := range []lT{"aa", "bb", "dd"} {
+		data, ok := link.Get(i)
 		if ok {
-			fmt.Printf("Get node: name=%s, age=%d\n", name1, age)
+			fmt.Printf("Get node: data=%v\n", data)
 		} else {
-			fmt.Printf("node %s not found\n", name)
+			fmt.Printf("node %v not found\n", i)
 		}
 	}
 	// 移除节点
 	fmt.Println("移除节点")
-	link.Remove("name1")
+	link.Remove("aa")
 	link.Traverse()
 	// 移除不存在的节点
 	fmt.Println("移除不存在的节点")
-	link.Remove("name11")
+	link.Remove("dd")
 	link.Traverse()
 	// 移除尾节点
 	fmt.Println("移除尾节点")
-	link.Remove("name3")
+	link.Remove("cc")
 	link.Traverse()
 }

@@ -2,7 +2,7 @@ package queue
 
 import "errors"
 
-type queueElemType interface{ interface{} }
+type queueElemType interface{ any }
 
 // type T = queueElemType
 

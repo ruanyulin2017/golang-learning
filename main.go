@@ -2,10 +2,10 @@ package main
 
 import (
 	linkedlist "golang-learning/linked_list"
-	"golang-learning/queue"
+	// "golang-learning/queue"
 )
 
 func main() {
-	queue.Main()
+	// queue.Main()
 	linkedlist.Main()
 }
