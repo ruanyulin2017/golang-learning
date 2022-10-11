@@ -2,9 +2,13 @@ package queue
 
 import "errors"
 
-type Queue interface {
-	Push(i int) error
-	Pop() (int, error)
+type queueElemType interface{ interface{} }
+
+// type T = queueElemType
+
+type Queue[T queueElemType] interface {
+	Push(i T) error
+	Pop() (T, error)
 }
 
 var ErrQueueFull = errors.New("QueueFullErr")

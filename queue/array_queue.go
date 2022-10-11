@@ -4,8 +4,8 @@ import (
 	"sync"
 )
 
-type arayQueue struct {
-	buf   []int
+type arayQueue[T queueElemType] struct {
+	buf   []T
 	len   int // 长度，包含元素个数
 	cap   int // 容量，最多能存储的元素个数
 	pushx int // push 索引，指向下次 push 位置
@@ -13,14 +13,14 @@ type arayQueue struct {
 	lock  sync.RWMutex
 }
 
-func NewArrayQueue(cap int) Queue {
-	return &arayQueue{
-		buf: make([]int, cap),
+func NewArrayQueue[T queueElemType](cap int) Queue[T] {
+	return &arayQueue[T]{
+		buf: make([]T, cap),
 		cap: cap,
 	}
 }
 
-func (q *arayQueue) Push(i int) error {
+func (q *arayQueue[T]) Push(i T) error {
 	q.lock.Lock() // 其他 goroutine 不可读不可写
 	defer q.lock.Unlock()
 
@@ -38,12 +38,13 @@ func (q *arayQueue) Push(i int) error {
 	return nil
 }
 
-func (q *arayQueue) Pop() (int, error) {
+func (q *arayQueue[T]) Pop() (T, error) {
 	q.lock.RLock() // 其他 goroutine 可读不可写
 	defer q.lock.RUnlock()
 
 	if q.len == 0 {
-		return 0, ErrQueueEnpty
+		var t T
+		return t, ErrQueueEnpty
 	}
 	popData := q.buf[q.popx]
 

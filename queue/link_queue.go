@@ -4,25 +4,25 @@ import (
 	"sync"
 )
 
-type node struct {
-	data int
-	next *node
+type node[T queueElemType] struct {
+	data T
+	next *node[T]
 }
 
-type linkQueue struct {
+type linkQueue[T queueElemType] struct {
 	len  int // 长度，包含元素个数
 	cap  int // 容量，最多能存储的元素个数
-	next *node
+	next *node[T]
 	lock sync.RWMutex
 }
 
-func NewLinkQueue(cap int) Queue {
-	return &linkQueue{
+func NewLinkQueue[T queueElemType](cap int) Queue[T] {
+	return &linkQueue[T]{
 		cap: cap,
 	}
 }
 
-func (q *linkQueue) Push(i int) error {
+func (q *linkQueue[T]) Push(i T) error {
 	q.lock.Lock()
 	defer q.lock.Unlock()
 
@@ -30,18 +30,19 @@ func (q *linkQueue) Push(i int) error {
 		return ErrQueueFull
 	}
 
-	n := &node{data: i}
+	n := &node[T]{data: i}
 	q.next = n
 	q.len++
 	return nil
 }
 
-func (q *linkQueue) Pop() (int, error) {
+func (q *linkQueue[T]) Pop() (T, error) {
 	q.lock.RLock()
 	defer q.lock.RUnlock()
 
 	if q.len == 0 {
-		return 0, ErrQueueEnpty
+		var t T
+		return t, ErrQueueEnpty
 	}
 	p := q.next
 	q.next = q.next.next

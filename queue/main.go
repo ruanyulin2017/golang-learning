@@ -9,17 +9,18 @@ import (
 func Main() {
 	n := 10
 	gn := 3
-	// que := NewArrayQueue(n)
-	que := NewLinkQueue(n)
+	type qT = int
+	// que := NewArrayQueue[qT](n)
+	que := NewLinkQueue[qT](n)
 	finished := false
 
 	wg := new(sync.WaitGroup)
 
 	wg.Add(1)
 
-	go func(q Queue, wg *sync.WaitGroup, finished *bool) {
+	go func(q Queue[qT], wg *sync.WaitGroup, finished *bool) {
 		for i := 0; i < n; i++ {
-			fmt.Printf("push [%d] to queue\n", i)
+			fmt.Printf("push [%v] to queue\n", i)
 			if err := q.Push(i); err != nil {
 				println(i)
 				panic(err)
@@ -31,7 +32,7 @@ func Main() {
 
 	for i := 0; i < gn; i++ {
 		wg.Add(1)
-		go func(q Queue, wg *sync.WaitGroup, finished *bool, gnum int) {
+		go func(q Queue[qT], wg *sync.WaitGroup, finished *bool, gnum int) {
 			for {
 				data, err := q.Pop()
 				if err != nil {
@@ -44,7 +45,7 @@ func Main() {
 					}
 				}
 				// print(data, gnum, printL)
-				fmt.Printf("goroutine [%d] pop data: %d\n", gnum, data)
+				fmt.Printf("goroutine [%v] pop data: %v\n", gnum, data)
 			}
 			wg.Done()
 		}(que, wg, &finished, i)
