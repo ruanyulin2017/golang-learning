@@ -1,6 +1,6 @@
 package main
 
-import binarysearchtree "golang-learning/binary_search_tree"
+import bubblesort "golang-learning/bubble_sort"
 
 // import binarytree "golang-learning/binary_tree"
 
@@ -11,5 +11,6 @@ func main() {
 	// queue.Main()
 	// linkedlist.Main()
 	// binarytree.Main()
-	binarysearchtree.Main()
+	// binarysearchtree.Main()
+	bubblesort.Main()
 }
