@@ -1,6 +1,8 @@
 package main
 
-import binarytree "golang-learning/binary_tree"
+import binarysearchtree "golang-learning/binary_search_tree"
+
+// import binarytree "golang-learning/binary_tree"
 
 // linkedlist "golang-learning/linked_list"
 // "golang-learning/queue"
@@ -8,5 +10,6 @@ import binarytree "golang-learning/binary_tree"
 func main() {
 	// queue.Main()
 	// linkedlist.Main()
-	binarytree.Main()
+	// binarytree.Main()
+	binarysearchtree.Main()
 }
